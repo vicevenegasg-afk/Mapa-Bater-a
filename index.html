@@ -696,6 +696,9 @@ function renderLive(){
   liveLayout();
   const list = document.getElementById("stList");
   list.addEventListener("scroll", liveScroll, {passive:true});
+  /* iPhone solo permite vibrar dentro de un toque: vibra al soltar el dedo si el gesto cambia de parte */
+  list.addEventListener("touchstart", () => { ui.live && (ui.live.t0 = list.scrollTop); }, {passive:true});
+  list.addEventListener("touchend", () => { const L = ui.live; if (L && L.t0 != null && Math.abs(list.scrollTop - L.t0) > L.slot * .12) haptic(); if (L) L.t0 = null; }, {passive:true});
 }
 function liveLayout(){
   const list = document.getElementById("stList"); if (!list || !ui.live) return;
@@ -708,7 +711,7 @@ function liveScroll(){
   const L = ui.live, list = document.getElementById("stList"); if (!L || !list || !L.slot) return;
   const song = S(), n = Math.min(song.secciones.length - 1, Math.max(0, Math.round(list.scrollTop / L.slot)));
   if (n === L.idx) return;
-  L.idx = n; tick(); haptic(); liveMark();
+  L.idx = n; tick(); if (L.t0 == null) haptic(); liveMark();
 }
 /* tick suave al cambiar de parte (respeta el ajuste de sonidos) */
 function tick(){ if (prefs.sound && ensureAudio()) tone(1900, .025, {type:"square", gain:.05}); }
