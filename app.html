@@ -278,6 +278,27 @@ body::before{background:var(--bar-glass);-webkit-backdrop-filter:blur(18px);back
 @keyframes inPrev{from{transform:translateX(-26px);opacity:.4}to{transform:none;opacity:1}}
 .sec.in-next{animation:inNext .18s ease-out}.sec.in-prev{animation:inPrev .18s ease-out}
 @media (prefers-reduced-motion:reduce){.sec.in-next,.sec.in-prev{animation:none}}
+
+/* en vivo: lista con desplazamiento */
+.st-list{display:block!important;overflow-y:auto;overscroll-behavior:contain;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding-top:0!important;margin:4px -6px 0;padding-inline:6px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 18px,#000 calc(100% - 26px),transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 18px,#000 calc(100% - 26px),transparent 100%)}
+.st-list::-webkit-scrollbar{display:none}
+.st-pad{height:var(--slot,150px);scroll-snap-align:start}
+.st-pad.end{scroll-snap-align:none}
+.st-list .st-card,.st-list .st-card:first-child{height:calc(var(--slot,150px) - 10px);margin:0 0 10px;scroll-snap-align:start;scroll-snap-stop:always;justify-content:center;gap:5px;padding:10px 16px;opacity:.5;transition:opacity .15s,background .15s,box-shadow .15s}
+.st-list .st-card.now{opacity:1;background:rgb(255 255 255 / .15);border-color:rgb(255 255 255 / .28);box-shadow:0 0 40px rgb(140 120 255 / .18)}
+.st-list .st-head{display:flex;align-items:baseline;gap:10px;min-width:0}
+.st-list .st-tag{font-size:.72rem;letter-spacing:.08em;color:#8f8aa3;flex:none}
+.st-list .st-card.now .st-tag{color:#fff}
+.st-list .st-nm,.st-list .st-card.now .st-nm{font-size:clamp(1.45rem,6.4vw,2rem);line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.st-list .st-dw{margin-left:auto;display:flex;align-items:center;gap:6px;flex:none}
+.st-list .st-sym,.st-list .st-card.now .st-sym{font-size:1.15rem;line-height:1;flex:none}
+.st-list .st-dynw{font-weight:400;font-style:italic;font-size:clamp(.95rem,4.2vw,1.2rem);color:var(--c);white-space:nowrap;flex:none}
+.st-list .st-marks{gap:2px 14px}
+.st-list .st-mark{font-size:clamp(.95rem,4vw,1.15rem)}
+.st-list .st-ly{font-size:clamp(.95rem,4.2vw,1.15rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st-list .st-note{font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st-prog button.cur{box-shadow:0 4px 0 -1px #FFF,0 0 12px rgb(255 255 255 / .35)}
 </style>
 
 <div id="app"></div>
@@ -626,37 +647,69 @@ function renderSheet(){
 
 /* ---------- vista en vivo ---------- */
 let wake = null;
+/* en vivo: lista continua; la segunda parte visible es la actual. Se avanza deslizando. */
+function liveCard(song, s, i, cur){
+  const marks = marksSorted(s), ly = letraDe(song, s);
+  return `<div class="st-card ${i === cur ? "now" : ""}" data-i="${i}" style="--c:${iColor(s.int)}">
+    <div class="st-head"><span class="st-tag">${i + 1}</span><div class="st-nm">${esc(lbl(song, s))}</div><span class="st-dw">${s.int ? `<span class="st-sym">${DYN_SYM[s.int]}</span>` : ""}<b class="st-dynw">${s.int ? DYN[s.int] : "Sin dinámica"}</b></span></div>
+    ${marks.length ? `<div class="st-marks">${marks.map(m => `<span class="st-mark">${mIco(m.t)}${MARKS[m.t].lbl}${m.txt ? ` <small>${esc(m.txt)}</small>` : ""}</span>`).join("")}</div>` : ""}
+    ${ly.txt ? `<div class="st-ly">${esc(ly.txt)}</div>` : ""}
+    ${s.nota ? `<div class="st-note">${esc(s.nota)}</div>` : ""}
+  </div>`;
+}
+function liveEditHtml(song, cur){
+  return `<div class="st-edit-h">Anotando en <b>${esc(lbl(song, cur))}</b></div>
+    <div class="st-dynrow">${[1,2,3,4,5].map(n => `<button data-live="dyn" data-v="${n}" class="${cur.int === n ? "on" : ""}">${DYN_BTN[n]}</button>`).join("")}</div>
+    <div class="st-mkrow">${Object.keys(MARKS).map(k => `<button data-live="mk" data-t="${k}" aria-label="Agregar ${MARKS[k].lbl}">${mIco(k)}<span>${MARKS[k].lbl}</span></button>`).join("")}</div>`;
+}
 function renderLive(){
   const song = S(), L = ui.live;
   let el = document.getElementById("stage");
   if (!el) { el = document.createElement("div"); el.id = "stage"; el.className = "stage"; document.body.appendChild(el); }
   if (!song.secciones.length) { el.innerHTML = `<div class="st-top"><span class="t">Sin secciones</span><button class="x" data-live="close">${ico("close")}</button></div>`; return; }
-  const tags = ["Ahora", "Luego", "Después"];
-  const card = (s, k) => {
-    const i = L.idx + k;
-    if (!s) return `<div class="st-card end"><span class="st-tag">${tags[k]}</span><div class="st-nm">Fin</div></div>`;
-    const marks = marksSorted(s);
-    return `<div class="st-card ${k === 0 ? "now" : ""}" style="--c:${iColor(s.int)}">
-      <div class="st-head"><span class="st-tag">${tags[k]} · ${i + 1}</span><div class="st-nm">${esc(lbl(song, s))}</div></div>
-      <div class="st-dyn">${s.int ? `<span class="st-sym">${DYN_SYM[s.int]}</span>` : ""}<b>${s.int ? DYN[s.int] : "Sin dinámica"}</b></div>
-      ${marks.length ? `<div class="st-marks">${marks.map(m => `<span class="st-mark">${mIco(m.t)}${MARKS[m.t].lbl}${m.txt ? ` <small>${esc(m.txt)}</small>` : ""}</span>`).join("")}</div>` : ""}
-      ${(ly => ly.txt ? `<div class="st-ly">${esc(ly.txt)}</div>` : "")(letraDe(song, s))}
-      ${s.nota ? `<div class="st-note">${esc(s.nota)}</div>` : ""}
-    </div>`;
-  };
+  L.idx = Math.min(L.idx, song.secciones.length - 1);
   el.innerHTML = `
-    <div class="st-top"><span class="beat" id="beat"></span><span class="t">${esc(song.titulo)} · ${L.idx + 1}/${song.secciones.length}${song.bpm ? ` · ${song.bpm} bpm` : ""}</span>
+    <div class="st-top"><span class="beat" id="beat"></span><span class="t">${esc(song.titulo)} · <span id="stCount">${L.idx + 1}</span>/${song.secciones.length}${song.bpm ? ` · ${song.bpm} bpm` : ""}</span>
       ${song.bpm ? `<button class="x ${L.click ? "on" : ""}" data-live="click" aria-label="Clic de metrónomo">${ico("sound")}</button>` : ""}
       <button class="x ${L.edit ? "on" : ""}" data-live="edit" aria-label="Anotar mientras tocas">${ico("pen")}</button>
       <button class="x" data-live="close" aria-label="Salir">${ico("close")}</button></div>
-    <div class="st-prog" aria-label="Avance en la canción">${song.secciones.map((s, i) => `<button data-live="go" data-i="${i}" class="${i < L.idx ? "past" : i === L.idx ? "cur" : ""}" aria-label="${esc(lbl(song, s))}" style="height:${s.int ? 22 + s.int*15 : 14}%;background:${iColor(s.int)}"></button>`).join("")}</div>
-    <div class="st-list">${(L.edit ? [0,1] : [0,1,2]).map(k => card(song.secciones[L.idx + k], k)).join("")}</div>
-    ${L.edit ? (cur => `<div class="st-edit" data-live="area">
-      <div class="st-edit-h">Anotando en <b>${esc(lbl(song, cur))}</b></div>
-      <div class="st-dynrow">${[1,2,3,4,5].map(n => `<button data-live="dyn" data-v="${n}" class="${cur.int === n ? "on" : ""}">${DYN_BTN[n]}</button>`).join("")}</div>
-      <div class="st-mkrow">${Object.keys(MARKS).map(k => `<button data-live="mk" data-t="${k}" aria-label="Agregar ${MARKS[k].lbl}">${mIco(k)}<span>${MARKS[k].lbl}</span></button>`).join("")}</div>
-    </div>`)(song.secciones[L.idx]) : `<div class="st-hint">Toca la derecha para avanzar una parte y la izquierda para volver. También sirve un pedal Bluetooth o las flechas. Con el lápiz puedes anotar mientras tocas.</div>`}`;
+    <div class="st-prog" id="stProg" aria-label="Avance en la canción">${song.secciones.map((s, i) => `<button data-live="go" data-i="${i}" class="${i < L.idx ? "past" : i === L.idx ? "cur" : ""}" aria-label="${esc(lbl(song, s))}" style="height:${s.int ? 22 + s.int*15 : 14}%;background:${iColor(s.int)}"></button>`).join("")}</div>
+    <div class="st-list" id="stList"><div class="st-pad"></div>${song.secciones.map((s, i) => liveCard(song, s, i, L.idx)).join("")}<div class="st-pad end"></div></div>
+    ${L.edit ? `<div class="st-edit" id="stEdit" data-live="area">${liveEditHtml(song, song.secciones[L.idx])}</div>` : `<div class="st-hint">Desliza hacia arriba para avanzar. También sirve un pedal Bluetooth o las flechas. Con el lápiz puedes anotar mientras tocas.</div>`}`;
+  liveLayout();
+  const list = document.getElementById("stList");
+  list.addEventListener("scroll", liveScroll, {passive:true});
 }
+function liveLayout(){
+  const list = document.getElementById("stList"); if (!list || !ui.live) return;
+  const slot = Math.max(110, list.clientHeight / 4.5);
+  list.style.setProperty("--slot", slot + "px");
+  list.querySelector(".st-pad.end").style.height = Math.max(0, list.clientHeight - 2 * slot) + "px";
+  ui.live.slot = slot; list.scrollTop = ui.live.idx * slot;
+}
+function liveScroll(){
+  const L = ui.live, list = document.getElementById("stList"); if (!L || !list || !L.slot) return;
+  const song = S(), n = Math.min(song.secciones.length - 1, Math.max(0, Math.round(list.scrollTop / L.slot)));
+  if (n === L.idx) return;
+  L.idx = n; tick(); haptic(); liveMark();
+}
+/* tick suave al cambiar de parte (respeta el ajuste de sonidos) */
+function tick(){ if (prefs.sound && ensureAudio()) tone(1900, .025, {type:"square", gain:.05}); }
+function liveMark(){
+  const L = ui.live, song = S();
+  document.querySelectorAll("#stList .st-card").forEach(c => c.classList.toggle("now", +c.dataset.i === L.idx));
+  document.querySelectorAll("#stProg button").forEach((b, i) => b.className = i < L.idx ? "past" : i === L.idx ? "cur" : "");
+  const c = document.getElementById("stCount"); if (c) c.textContent = L.idx + 1;
+  const ed = document.getElementById("stEdit"); if (ed) ed.innerHTML = liveEditHtml(song, song.secciones[L.idx]);
+}
+function liveRefresh(){
+  const L = ui.live, song = S(), card = document.querySelector(`#stList .st-card[data-i="${L.idx}"]`);
+  if (card) card.outerHTML = liveCard(song, song.secciones[L.idx], L.idx, L.idx);
+  const b = document.querySelector(`#stProg button[data-i="${L.idx}"]`), s = song.secciones[L.idx];
+  if (b) { b.style.height = `${s.int ? 22 + s.int*15 : 14}%`; b.style.background = iColor(s.int); }
+  liveMark();
+}
+window.addEventListener("resize", () => liveLayout());
 /* reloj de pulso preciso: programa los clics con el reloj de audio, no con setInterval */
 const clock = {timer:null, next:0, n:0, bpm:0, per:4, onBeat:null, sound:() => true};
 function audioSessionPlayback(on){ try { if (navigator.audioSession) navigator.audioSession.type = on ? "playback" : "auto"; } catch(e) {} }
@@ -704,7 +757,7 @@ function stopBeat(){ clockStop(); audioSessionPlayback(false); }
 async function openLive(){
   const song = S();
   ui.live = {idx: Math.max(0, song.secciones.findIndex(s => s.id === ui.active)), click:false};
-  render(); startBeat();
+  ensureAudio(); render(); startBeat();
   try { wake = await navigator.wakeLock?.request("screen"); } catch(e) {}
 }
 function closeLive(){
@@ -712,10 +765,12 @@ function closeLive(){
   const song = S(); if (song && ui.live) ui.active = song.secciones[ui.live.idx]?.id || ui.active;
   ui.live = null; document.getElementById("stage")?.remove(); render(); scrollToActive();
 }
-function liveStep(d){
-  const song = S(); if (!ui.live) return;
-  const n = Math.min(song.secciones.length - 1, Math.max(0, ui.live.idx + d)); if (n !== ui.live.idx) haptic(); ui.live.idx = n; renderLive();
+function liveGo(i){
+  const list = document.getElementById("stList"); if (!list || !ui.live) return;
+  const n = Math.min(S().secciones.length - 1, Math.max(0, i));
+  list.scrollTo({top:n * ui.live.slot, behavior:"smooth"});
 }
+function liveStep(d){ if (ui.live) liveGo(ui.live.idx + d); }
 document.addEventListener("click", e => {
   if (!ui.live) return;
   const stage = e.target.closest("#stage"); if (!stage) return;
@@ -727,15 +782,13 @@ document.addEventListener("click", e => {
       const song = S(), cur = song.secciones[ui.live.idx]; snap(song);
       if (b.dataset.live === "dyn") { const v = +b.dataset.v; cur.int = cur.int === v ? 0 : v; fb(cur.int ? "dyn" : "off", cur.int); }
       else { (cur.marcas ||= []).push({t:b.dataset.t}); fb("mark", b.dataset.t); toast(`${lbl(song, cur)}: ${MARKS[b.dataset.t].lbl}`, true); }
-      touch(song); renderLive();
+      touch(song); liveRefresh();
     }
-    if (b.dataset.live === "go") { ui.live.idx = +b.dataset.i; renderLive(); }
+    if (b.dataset.live === "go") liveGo(+b.dataset.i);
     if (b.dataset.live === "click") {
       ensureAudio(); ui.live.click = !ui.live.click; audioSessionPlayback(ui.live.click); renderLive();
     }
-    return;
   }
-  const r = stage.getBoundingClientRect(); liveStep(e.clientX - r.left > r.width * 0.35 ? 1 : -1);
 });
 document.addEventListener("keydown", e => {
   if (!ui.live) return;
