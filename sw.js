@@ -1,5 +1,5 @@
 /* Service worker: guarda la app para usarla sin internet. Con internet siempre busca la versión nueva primero. */
-const CACHE = "mapa-bateria-14db6631d8";
+const CACHE = "mapa-bateria-14db6631d8-i2";
 const FILES = ["./", "index.html", "seed.js", "manifest.webmanifest", "icons/icon-180.png", "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => {
