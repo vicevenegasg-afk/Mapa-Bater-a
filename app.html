@@ -299,6 +299,72 @@ body::before{background:var(--bar-glass);-webkit-backdrop-filter:blur(18px);back
 .st-list .st-ly{font-size:clamp(.95rem,4.2vw,1.15rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .st-list .st-note{font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .st-prog button.cur{box-shadow:0 4px 0 -1px #FFF,0 0 12px rgb(255 255 255 / .35)}
+
+/* ===== después del ensayo (27 nov) ===== */
+/* colores por tipo de parte */
+.curve span{height:100%!important;border-radius:3px}
+.curve span.dv,.strip button.dv{opacity:.65}
+.curve{height:8px}
+.strip{height:14px;align-items:stretch}
+.strip button{height:100%!important;opacity:.9}
+.strip button.on{opacity:1;box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--fg)}
+.sec,.sec.on,.sec.dragging{box-shadow:inset 5px 0 0 var(--tc),var(--glass-sh)}
+.sec.on{box-shadow:inset 5px 0 0 var(--tc),0 12px 34px rgb(80 60 120 / .13)}
+.sec.dv{margin-top:-6px;border-top-left-radius:8px;border-top-right-radius:8px}
+/* notas en lista, sin cortes */
+.notes{display:grid;gap:5px}
+.nrow{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;text-align:left;width:100%;padding:8px 12px;border-radius:14px;background:var(--glass);border:1px solid var(--glass-bd);font-size:.97rem;line-height:1.35}
+.nrow .nt{display:inline-flex;align-items:center;gap:5px;font-style:italic;color:var(--muted);flex:none}
+.nrow .nt svg{width:14px;height:14px}
+.nrow .ntx{white-space:pre-wrap;overflow-wrap:anywhere;min-width:0}
+.sec-tools{grid-template-columns:minmax(0,2.2fr) repeat(5,minmax(0,1fr))}
+.sec-tools .tb.wide{max-width:none;aspect-ratio:auto;height:40px;border-radius:999px;gap:4px;font-size:.95rem;justify-self:stretch;background:var(--ink);color:var(--ink-fg);border-color:var(--ink)}
+.sec-tools .tb.wide svg{width:18px;height:18px}
+.sec-tools .tb:nth-child(6){margin-left:0}
+/* teclado de palabras clave */
+.kw{display:grid;gap:6px;margin-top:-4px}
+.kw-row{display:flex;gap:6px;overflow-x:auto;align-items:center;scrollbar-width:none;margin:0 -34px;padding:0 34px}
+.kw-row::-webkit-scrollbar{display:none}
+.kw-g{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);flex:none;min-width:74px}
+.kw button{flex:none;min-height:36px;padding:0 13px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-bd);font-size:.9rem;white-space:nowrap}
+.kw button:active{background:var(--ink);color:var(--ink-fg)}
+.seg.el{grid-auto-flow:row;grid-template-columns:repeat(3,1fr)}
+.seg.el button{display:flex;align-items:center;justify-content:center;gap:5px}
+.seg.el svg{width:14px;height:14px}
+#mTxt{font-size:1.05rem;min-height:84px;font-style:normal}
+/* hojas por encima del modo en vivo */
+.live-on .scrim{z-index:90}.live-on .sheet{z-index:91}
+.toast{z-index:95!important}
+/* en vivo legible: claro, sans-serif, grande, sin opacar */
+.stage.lv{--sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;font-family:var(--sans);background:#F3F1EC;color:#111;grid-template-rows:auto minmax(0,1fr) auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.stage.lv .st-top{padding:0 0 6px}
+.stage.lv .st-top .t{color:#444;font-style:normal;font-size:.95rem;font-weight:500}
+.stage.lv .x{color:#111}
+.stage.lv .x.on{background:#111;color:#fff}
+.stage.lv .beat{background:#CFCBC2}.stage.lv .beat.flash{background:#111}.stage.lv .beat.flash.one{background:#E7798F}
+.lv-list{position:relative;overflow-y:auto;overscroll-behavior:contain;scroll-snap-type:y mandatory;scroll-padding-top:var(--pad,110px);-webkit-overflow-scrolling:touch;touch-action:pan-y;margin:0 -4px;padding:0 4px}
+.lv-list::-webkit-scrollbar{display:none}
+.lv-pad{height:var(--pad,110px)}
+.lv-card{scroll-snap-align:start;scroll-snap-stop:always;background:#fff;border-radius:18px;margin-bottom:10px;padding:14px 16px 14px 20px;box-shadow:inset 7px 0 0 var(--tc),0 1px 2px rgb(0 0 0 / .06);border:2px solid transparent;color:#111}
+.lv-card.now{border-color:#111;box-shadow:inset 7px 0 0 var(--tc),0 10px 28px rgb(0 0 0 / .16)}
+.lv-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.lv-n{font-size:1rem;font-weight:600;color:#666;min-width:1.4em}
+.lv-nm{font-size:clamp(1.7rem,7.6vw,2.2rem);font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.lv-dyn{margin-left:auto;font-size:clamp(1.05rem,4.6vw,1.3rem);font-weight:600;white-space:nowrap}
+.lv-ly{font-size:clamp(1.05rem,4.6vw,1.25rem);color:#444;font-style:italic;margin-top:4px;white-space:pre-line;line-height:1.3}
+.lv-notes{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.lv-notes li{font-size:clamp(1.15rem,5vw,1.4rem);font-weight:500;line-height:1.3;padding-left:16px;position:relative;overflow-wrap:anywhere;white-space:pre-wrap}
+.lv-notes li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--tc)}
+.lv-notes b{font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.lv-notes svg{width:.85em;height:.85em}
+.lv-hint{font-size:.85rem;color:#666;padding-top:6px}
+.lv-edit{border-top:1px solid #DDD8CF;padding-top:10px;display:grid;gap:8px}
+.lv-edit-h{font-size:.9rem;color:#555}.lv-edit-h b{color:#111}
+.lv-dynrow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.lv-dynrow button{min-height:42px;border-radius:999px;font-size:.85rem;font-weight:500;color:#222;background:#fff;border:1px solid #DDD8CF}
+.lv-dynrow button.on{background:#111;color:#fff;border-color:#111}
+.lv-addnote{min-height:50px;border-radius:999px;background:#111;color:#fff;font-size:1.05rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px}
+.lv-addnote svg{width:20px;height:20px}
 </style>
 
 <div id="app"></div>
@@ -329,6 +395,7 @@ const ICON = {
   dup:'<rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.5V6.5a2 2 0 00-2-2h-7a2 2 0 00-2 2v7a2 2 0 002 2h2" fill="none" stroke="currentColor" stroke-width="1.5"/>',
   trash:'<path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>',
   pen:'<path d="M4 20h4L19 9l-4-4L4 16z M13 7l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+  split:'<rect x="3.5" y="6" width="17" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3.5v17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.2 2.4"/>',
   grip:'<path d="M8 8h8M8 12h8M8 16h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
   undo:'<path d="M9 4.5L4.5 9 9 13.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 9H14a5.5 5.5 0 010 11h-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
   more:'<circle cx="5" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="19" cy="12" r="2" fill="currentColor"/>',
@@ -407,7 +474,8 @@ function loadCache(){
   let raw = null;
   try { raw = localStorage.getItem(CACHE_KEY); if (raw) { const o = JSON.parse(raw); songs = o.songs || {}; (o.dirty || []).forEach(id => dirty.add(id)); } } catch(e) {}
   /* versión instalada: la primera vez trae las canciones que había en Claude */
-  if (!raw && Array.isArray(window.MAPA_SEED)) { window.MAPA_SEED.forEach(x => { if (x && x.id && Array.isArray(x.secciones)) songs[x.id] = JSON.parse(JSON.stringify(x)); }); saveCache(); }
+  Object.values(songs).forEach(normSong);
+  if (!raw && Array.isArray(window.MAPA_SEED)) { window.MAPA_SEED.forEach(x => { if (x && x.id && Array.isArray(x.secciones)) songs[x.id] = normSong(JSON.parse(JSON.stringify(x))); }); saveCache(); }
   try { const u = JSON.parse(localStorage.getItem(UI_KEY) || "null"); if (u && u.songId && songs[u.songId]) { ui.screen = u.screen === "song" ? "song" : "home"; ui.songId = u.songId; ui.active = u.active || null; } } catch(e) {}
 }
 function saveUi(){ try { localStorage.setItem(UI_KEY, JSON.stringify({screen:ui.screen, songId:ui.songId, active:ui.active})); } catch(e) {} }
@@ -460,7 +528,7 @@ async function initDb(){
       if (dirty.has(d.id)) return;
       const data = d.data(); if (!data) return;
       const local = songs[d.id];
-      if (!local || (data.actualizado || 0) >= (local.actualizado || 0)) songs[d.id] = {...JSON.parse(JSON.stringify(data)), id:d.id}; // copia editable: los datos de la nube llegan congelados
+      if (!local || (data.actualizado || 0) >= (local.actualizado || 0)) songs[d.id] = normSong({...JSON.parse(JSON.stringify(data)), id:d.id}); // copia editable: los datos de la nube llegan congelados
     });
     for (const id of Object.keys(songs)) {
       if (!remote.has(id) && !dirty.has(id)) {
@@ -477,7 +545,16 @@ async function initDb(){
 const S = () => songs[ui.songId];
 const sec = (song, id) => song && song.secciones.find(s => s.id === id);
 function songList(){ return Object.values(songs).sort((a,b) => (a.orden ?? 999) - (b.orden ?? 999) || String(a.titulo).localeCompare(b.titulo, "es")); }
-function markText(m){ return `${MARKS[m.t].lbl}${m.txt ? `: ${m.txt}` : ""}`; }
+const isNote = m => !MARKS[m.t];
+function markText(m){ return isNote(m) ? (m.txt || "") : `${MARKS[m.t].lbl}${m.txt ? `: ${m.txt}` : ""}`; }
+/* colores por tipo de parte */
+const TYPE_COLORS = [["intro","#8FA9D6"],["verso","#6FBFA3"],["estrofa","#6FBFA3"],["pre","#EDB46C"],["coro","#E7798F"],["puente","#9F8AE4"],["instrumental","#F0976E"],["interludio","#F0976E"],["solo","#F0976E"],["riff","#F0976E"],["final","#9E98B2"],["outro","#9E98B2"],["tag","#9E98B2"]];
+function tColor(s){ const k = norm(splitName(s && s.nombre).tipo); const f = TYPE_COLORS.find(([p]) => k.startsWith(p)); return f ? f[1] : "#C3BDD2"; }
+/* la nota única antigua pasa a ser el primer elemento de la lista de notas */
+function normSong(song){
+  (song.secciones || []).forEach(x => { if (!Array.isArray(x.marcas)) x.marcas = []; if (x.nota && String(x.nota).trim()) { x.marcas.push({t:"nota", txt:String(x.nota).trim()}); x.nota = ""; } });
+  return song;
+}
 function marksSorted(s){ return (s.marcas || []).map((m,i) => ({...m, i})); }
 function fmtDate(ts){ try { return new Date(ts).toLocaleDateString("es-CL", {day:"numeric", month:"short"}); } catch(e) { return ""; } }
 
@@ -492,7 +569,7 @@ function render(){
 }
 
 function curveHtml(song, cls = "curve"){
-  return `<div class="${cls}" aria-hidden="true">${song.secciones.map(s => `<span style="height:${s.int ? 20 + s.int*16 : 12}%;background:${iColor(s.int)}"></span>`).join("")}</div>`;
+  return `<div class="${cls}" aria-hidden="true">${song.secciones.map(s => `<span class="${s.div ? "dv" : ""}" style="background:${tColor(s)}"></span>`).join("")}</div>`;
 }
 
 /* índice del Cancionero CCC 2025: [título, tono, página] */
@@ -555,7 +632,7 @@ function renderSong(){
     <button class="metaline" data-act="editSong" aria-label="Editar tono, tempo y datos">${meta || `<span>Sin tono ni tempo</span>`}<span id="sync" class="sync ${syncState()}" title="Estado de guardado"><i></i><span hidden></span></span><span class="edit">Editar</span></button>
     ${ui.shorthand ? `<form class="shorthand" data-form="short"><input id="shortIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder='C2 build fill golpe:"Jesús"'><button class="btn ink sm">Aplicar</button></form>
       <p class="help" style="margin:2px 0 10px">Sección: <code>I</code> intro, <code>V1</code>, <code>PC</code>, <code>C2</code>, <code>P1</code> puente, <code>S</code> solo, <code>F1</code> final o <code>#5</code>. Dinámica: <code>mudo cerrado acomp build abierto</code>. Golpes: <code>sil fill golpe corte platos</code>, con <code>:"nota"</code> detrás. <code>nota:"…"</code> agrega nota.</p>` : ""}
-    <div class="strip" role="tablist" aria-label="Curva de intensidad">${song.secciones.map(s => `<button role="tab" class="${s.id === ui.active ? "on" : ""}" data-act="pick" data-sid="${s.id}" aria-label="${esc(lbl(song, s))}" style="height:${s.int ? 20 + s.int*16 : 14}%;background:${iColor(s.int)}"></button>`).join("")}</div>
+    <div class="strip" role="tablist" aria-label="Partes">${song.secciones.map(s => `<button role="tab" class="${s.id === ui.active ? "on" : ""} ${s.div ? "dv" : ""}" data-act="pick" data-sid="${s.id}" aria-label="${esc(lbl(song, s))}" style="background:${tColor(s)}"></button>`).join("")}</div>
   </div></header>
   <main class="wrap secs">
     ${song.secciones.map((s, i) => renderSec(song, s, i)).join("")}
@@ -563,35 +640,46 @@ function renderSong(){
   </main>`;
 }
 
+function notesHtml(s, act){
+  const marks = marksSorted(s); if (!marks.length) return "";
+  return `<div class="notes">${marks.map(m => `<button class="nrow" ${act ? `data-act="mark" data-sid="${s.id}" data-mi="${m.i}"` : ""}>${isNote(m) ? "" : `<span class="nt">${mIco(m.t)}${MARKS[m.t].lbl}</span>`}${m.txt ? `<span class="ntx">${esc(m.txt)}</span>` : ""}</button>`).join("")}</div>`;
+}
 function renderSec(song, s, i){
   const on = s.id === ui.active;
-  const marks = marksSorted(s);
   const ly = letraDe(song, s);
-  return `<section class="sec ${on ? "on" : ""}" id="s-${s.id}" data-sid="${s.id}">
+  return `<section class="sec ${on ? "on" : ""} ${s.div ? "dv" : ""}" id="s-${s.id}" data-sid="${s.id}" style="--tc:${tColor(s)}">
     <button class="sec-h" data-act="pick" data-sid="${s.id}"><h3>${esc(lbl(song, s))}</h3><span class="dsum">${s.int ? `${DYN_SYM[s.int]} <b>${DYN[s.int]}</b>` : (on ? "" : "—")}</span>${ly.txt ? `<span class="ly ${ly.auto ? "auto" : ""}">${esc(ly.txt)}</span>` : ""}</button>
     ${on ? `<div class="dyn" role="group" aria-label="Dinámica">${[1,2,3,4,5].map(n => `<button data-act="int" data-sid="${s.id}" data-v="${n}" class="${s.int === n ? "on" : ""}" aria-pressed="${s.int === n}" aria-label="${DYN[n]}">${DYN_BTN[n]}</button>`).join("")}</div>` : ""}
-    ${marks.length ? `<div class="marks">${marks.map(m => `<button class="chip" data-act="mark" data-sid="${s.id}" data-mi="${m.i}">${mIco(m.t)}${MARKS[m.t].lbl}${m.txt ? `<small>${esc(m.txt)}</small>` : ""}</button>`).join("")}</div>` : ""}
+    ${notesHtml(s, true)}
     ${on ? `
-      <div class="note-row"><textarea id="note-${s.id}" data-note="${s.id}" rows="1" placeholder="Agregar nota…">${esc(s.nota || "")}</textarea>${dict ? `<button class="iconbtn" data-act="dictNote" data-sid="${s.id}" aria-label="Dictar nota">${ico("mic")}</button>` : ""}</div>
       <div class="sec-tools">
-        ${Object.keys(MARKS).map(k => `<button class="tb pad" data-pad="${k}" aria-label="Agregar ${MARKS[k].lbl} (mantén para agregar con nota)">${mIco(k)}</button>`).join("")}
+        <button class="tb wide" data-act="addNote" data-sid="${s.id}">${ico("plus")}<span>Nota</span></button>
+        <button class="tb" data-act="split" data-sid="${s.id}" aria-label="Dividir parte en dos mitades">${ico("split")}</button>
         <button class="tb" data-act="editSec" data-sid="${s.id}" aria-label="Editar nombre y letra">${ico("pen")}</button>
         <button class="tb ${ui.confirmDel === s.id ? "del-confirm" : ""}" data-act="delSec" data-sid="${s.id}" aria-label="${ui.confirmDel === s.id ? "Toca otra vez para borrar" : "Borrar parte"}">${ico("trash")}</button>
         <button class="tb" data-act="dup" data-sid="${s.id}" aria-label="Duplicar parte">${ico("dup")}</button>
         <button class="tb" data-act="addAfter" data-sid="${s.id}" aria-label="Agregar parte debajo">${ico("plus")}</button>
-      </div>` : (s.nota ? `<div class="note">${esc(s.nota)}</div>` : "")}
+      </div>` : ""}
   </section>`;
 }
 
 /* ---------- hojas (sheets) ---------- */
+const KEYWORDS = [
+  ["Ritmo", ["ritmo base", "back-beat", "half-time", "double-time", "con golpes", "4 en el piso", "shuffle", "groove"]],
+  ["Figura", ["en negras", "en corcheas", "en semicorcheas", "tresillos", "en blancas"]],
+  ["Instrumento", ["hi-hat", "hi-hat abierto", "bombo", "caja", "aro", "toms", "tom de piso", "ride", "campana", "crash", "platos"]],
+  ["Momento", ["al inicio", "al final", "a la mitad", "último compás", "2 compases", "4 compases", "x2", "x4"]],
+  ["Acción", ["entrada", "fill", "corte", "silencio", "crescendo", "sin caja", "solo platos", "todos juntos"]]
+];
 function renderSheet(){
   const sh = ui.sheet, song = S();
   let inner = "";
   if (sh.type === "mark") {
     const s = sec(song, sh.sid), m = s.marcas[sh.mi];
-    inner = `<h2>${mIco(m.t).replace("<svg","<svg style='width:26px;height:26px;vertical-align:-5px'")} ${MARKS[m.t].lbl} · ${esc(lbl(song, s))}</h2>
-      <div class="field"><span class="lbl">Tipo</span><div class="seg">${Object.keys(MARKS).map(k => `<button data-act="mType" data-v="${k}" class="${m.t === k ? "on" : ""}">${MARKS[k].lbl}</button>`).join("")}</div></div>
-      <label class="field"><span class="lbl">Nota</span><div class="note-row"><input id="mTxt" value="${esc(m.txt || "")}" placeholder='ej. justo antes del coro, con el bajo, en "Jesús"'>${dict ? `<button class="iconbtn" data-act="dictMark" aria-label="Dictar detalle">${ico("mic")}</button>` : ""}</div></label>
+    inner = `<h2>${sh.isNew ? "Nueva nota" : "Nota"} · ${esc(lbl(song, s))}</h2>
+      <div class="note-row"><textarea id="mTxt" rows="3" placeholder="Escribe o toca las palabras de abajo">${esc(m.txt || "")}</textarea>${dict ? `<button class="iconbtn" data-act="dictMark" aria-label="Dictar">${ico("mic")}</button>` : ""}</div>
+      <div class="kw">${KEYWORDS.map(([g, ws]) => `<div class="kw-row"><span class="kw-g">${g}</span>${ws.map(w => `<button data-act="kw" data-v="${esc(w)}">${esc(w)}</button>`).join("")}</div>`).join("")}</div>
+      <div class="field"><span class="lbl">Elemento (opcional)</span><div class="seg el">${["nota", ...Object.keys(MARKS)].map(k => `<button data-act="mType" data-v="${k}" class="${(isNote(m) ? "nota" : m.t) === k ? "on" : ""}">${k === "nota" ? "Ninguno" : mIco(k) + MARKS[k].lbl}</button>`).join("")}</div></div>
       <div class="row"><button class="btn ink" data-act="closeSheet" style="flex:1">Listo</button><button class="btn danger" data-act="mDel">Quitar</button></div>`;
   } else if (sh.type === "sec") {
     const s = sec(song, sh.sid);
@@ -647,25 +735,25 @@ function renderSheet(){
 
 /* ---------- vista en vivo ---------- */
 let wake = null;
-/* en vivo: lista continua; la segunda parte visible es la actual. Se avanza deslizando. */
+/* en vivo: fondo claro, letra negra grande. Lista continua; la segunda parte visible es la actual. */
 function liveCard(song, s, i, cur){
-  const marks = marksSorted(s), ly = letraDe(song, s);
-  return `<div class="st-card ${i === cur ? "now" : ""}" data-i="${i}" style="--c:${iColor(s.int)}">
-    <div class="st-head"><span class="st-tag">${i + 1}</span><div class="st-nm">${esc(lbl(song, s))}</div><span class="st-dw">${s.int ? `<span class="st-sym">${DYN_SYM[s.int]}</span>` : ""}<b class="st-dynw">${s.int ? DYN[s.int] : "Sin dinámica"}</b></span></div>
-    ${marks.length ? `<div class="st-marks">${marks.map(m => `<span class="st-mark">${mIco(m.t)}${MARKS[m.t].lbl}${m.txt ? ` <small>${esc(m.txt)}</small>` : ""}</span>`).join("")}</div>` : ""}
-    ${ly.txt ? `<div class="st-ly">${esc(ly.txt)}</div>` : ""}
-    ${s.nota ? `<div class="st-note">${esc(s.nota)}</div>` : ""}
+  const ly = letraDe(song, s), marks = marksSorted(s);
+  return `<div class="lv-card ${i === cur ? "now" : ""}" data-live="go" data-i="${i}" style="--tc:${tColor(s)}">
+    <div class="lv-h"><span class="lv-n">${i + 1}</span><span class="lv-nm">${esc(lbl(song, s))}</span>${s.int ? `<span class="lv-dyn">${DYN_SYM[s.int]} ${DYN[s.int]}</span>` : ""}</div>
+    ${ly.txt ? `<div class="lv-ly">${esc(ly.txt)}</div>` : ""}
+    ${marks.length ? `<ul class="lv-notes">${marks.map(m => `<li>${isNote(m) ? "" : `<b>${mIco(m.t)}${MARKS[m.t].lbl}</b> `}${esc(m.txt || "")}</li>`).join("")}</ul>` : ""}
   </div>`;
 }
 function liveEditHtml(song, cur){
-  return `<div class="st-edit-h">Anotando en <b>${esc(lbl(song, cur))}</b></div>
-    <div class="st-dynrow">${[1,2,3,4,5].map(n => `<button data-live="dyn" data-v="${n}" class="${cur.int === n ? "on" : ""}">${DYN_BTN[n]}</button>`).join("")}</div>
-    <div class="st-mkrow">${Object.keys(MARKS).map(k => `<button data-live="mk" data-t="${k}" aria-label="Agregar ${MARKS[k].lbl}">${mIco(k)}<span>${MARKS[k].lbl}</span></button>`).join("")}</div>`;
+  return `<div class="lv-edit-h">Anotando en <b>${esc(lbl(song, cur))}</b></div>
+    <div class="lv-dynrow">${[1,2,3,4,5].map(n => `<button data-live="dyn" data-v="${n}" class="${cur.int === n ? "on" : ""}">${DYN_BTN[n]}</button>`).join("")}</div>
+    <button class="lv-addnote" data-live="note">${ico("plus")} Agregar nota</button>`;
 }
 function renderLive(){
   const song = S(), L = ui.live;
   let el = document.getElementById("stage");
-  if (!el) { el = document.createElement("div"); el.id = "stage"; el.className = "stage"; document.body.appendChild(el); }
+  if (!el) { el = document.createElement("div"); el.id = "stage"; el.className = "stage lv"; document.body.appendChild(el); }
+  document.body.classList.add("live-on");
   if (!song.secciones.length) { el.innerHTML = `<div class="st-top"><span class="t">Sin secciones</span><button class="x" data-live="close">${ico("close")}</button></div>`; return; }
   L.idx = Math.min(L.idx, song.secciones.length - 1);
   el.innerHTML = `
@@ -673,26 +761,28 @@ function renderLive(){
       ${song.bpm ? `<button class="x ${L.click ? "on" : ""}" data-live="click" aria-label="Clic de metrónomo">${ico("sound")}</button>` : ""}
       <button class="x ${L.edit ? "on" : ""}" data-live="edit" aria-label="Anotar mientras tocas">${ico("pen")}</button>
       <button class="x" data-live="close" aria-label="Salir">${ico("close")}</button></div>
-    <div class="st-prog" id="stProg" aria-label="Avance en la canción">${song.secciones.map((s, i) => `<button data-live="go" data-i="${i}" class="${i < L.idx ? "past" : i === L.idx ? "cur" : ""}" aria-label="${esc(lbl(song, s))}" style="height:${s.int ? 22 + s.int*15 : 14}%;background:${iColor(s.int)}"></button>`).join("")}</div>
-    <div class="st-list" id="stList"><div class="st-pad"></div>${song.secciones.map((s, i) => liveCard(song, s, i, L.idx)).join("")}<div class="st-pad end"></div></div>
-    ${L.edit ? `<div class="st-edit" id="stEdit" data-live="area">${liveEditHtml(song, song.secciones[L.idx])}</div>` : `<div class="st-hint">Desliza hacia arriba para avanzar. También sirve un pedal Bluetooth o las flechas. Con el lápiz puedes anotar mientras tocas.</div>`}`;
+    <div class="lv-list" id="stList"><div class="lv-pad"></div>${song.secciones.map((s, i) => liveCard(song, s, i, L.idx)).join("")}<div class="lv-pad end"></div></div>
+    ${L.edit ? `<div class="lv-edit" id="stEdit" data-live="area">${liveEditHtml(song, song.secciones[L.idx])}</div>` : `<div class="lv-hint">Desliza hacia arriba para avanzar o toca una parte para ir a ella.</div>`}`;
   liveLayout();
   const list = document.getElementById("stList");
   list.addEventListener("scroll", liveScroll, {passive:true});
-  /* iPhone solo permite vibrar dentro de un toque: vibra al soltar el dedo si el gesto cambia de parte */
   list.addEventListener("touchstart", () => { ui.live && (ui.live.t0 = list.scrollTop); }, {passive:true});
-  list.addEventListener("touchend", () => { const L = ui.live; if (L && L.t0 != null && Math.abs(list.scrollTop - L.t0) > L.slot * .12) haptic(); if (L) L.t0 = null; }, {passive:true});
+  list.addEventListener("touchend", () => { const L = ui.live; if (L && L.t0 != null && Math.abs(list.scrollTop - L.t0) > 20) haptic(); if (L) L.t0 = null; }, {passive:true});
 }
+function liveCards(){ return [...document.querySelectorAll("#stList .lv-card")]; }
 function liveLayout(){
   const list = document.getElementById("stList"); if (!list || !ui.live) return;
-  const slot = Math.max(110, list.clientHeight / 4.5);
-  list.style.setProperty("--slot", slot + "px");
-  list.querySelector(".st-pad.end").style.height = Math.max(0, list.clientHeight - 2 * slot) + "px";
-  ui.live.slot = slot; list.scrollTop = ui.live.idx * slot;
+  const P = Math.round(Math.min(150, Math.max(70, list.clientHeight * .2)));
+  list.style.setProperty("--pad", P + "px"); ui.live.pad = P;
+  const cards = liveCards(), last = cards[cards.length - 1];
+  list.querySelector(".lv-pad.end").style.height = Math.max(0, list.clientHeight - P - (last ? last.offsetHeight : 0) - 10) + "px";
+  const c = cards[ui.live.idx]; if (c) list.scrollTop = c.offsetTop - P;
 }
 function liveScroll(){
-  const L = ui.live, list = document.getElementById("stList"); if (!L || !list || !L.slot) return;
-  const song = S(), n = Math.min(song.secciones.length - 1, Math.max(0, Math.round(list.scrollTop / L.slot)));
+  const L = ui.live, list = document.getElementById("stList"); if (!L || !list) return;
+  const line = list.scrollTop + L.pad;
+  let n = 0, best = Infinity;
+  liveCards().forEach((c, i) => { const d = Math.abs(c.offsetTop - line); if (d < best) { best = d; n = i; } });
   if (n === L.idx) return;
   L.idx = n; tick(); if (L.t0 == null) haptic(); liveMark();
 }
@@ -700,16 +790,13 @@ function liveScroll(){
 function tick(){ if (prefs.sound && ensureAudio()) tone(1900, .025, {type:"square", gain:.05}); }
 function liveMark(){
   const L = ui.live, song = S();
-  document.querySelectorAll("#stList .st-card").forEach(c => c.classList.toggle("now", +c.dataset.i === L.idx));
-  document.querySelectorAll("#stProg button").forEach((b, i) => b.className = i < L.idx ? "past" : i === L.idx ? "cur" : "");
+  liveCards().forEach(c => c.classList.toggle("now", +c.dataset.i === L.idx));
   const c = document.getElementById("stCount"); if (c) c.textContent = L.idx + 1;
   const ed = document.getElementById("stEdit"); if (ed) ed.innerHTML = liveEditHtml(song, song.secciones[L.idx]);
 }
 function liveRefresh(){
-  const L = ui.live, song = S(), card = document.querySelector(`#stList .st-card[data-i="${L.idx}"]`);
+  const L = ui.live, song = S(), card = document.querySelector(`#stList .lv-card[data-i="${L.idx}"]`);
   if (card) card.outerHTML = liveCard(song, song.secciones[L.idx], L.idx, L.idx);
-  const b = document.querySelector(`#stProg button[data-i="${L.idx}"]`), s = song.secciones[L.idx];
-  if (b) { b.style.height = `${s.int ? 22 + s.int*15 : 14}%`; b.style.background = iColor(s.int); }
   liveMark();
 }
 window.addEventListener("resize", () => liveLayout());
@@ -766,12 +853,12 @@ async function openLive(){
 function closeLive(){
   stopBeat(); try { wake && wake.release(); } catch(e) {} wake = null;
   const song = S(); if (song && ui.live) ui.active = song.secciones[ui.live.idx]?.id || ui.active;
-  ui.live = null; document.getElementById("stage")?.remove(); render(); scrollToActive();
+  ui.live = null; document.body.classList.remove("live-on"); document.getElementById("stage")?.remove(); render(); scrollToActive();
 }
 function liveGo(i){
   const list = document.getElementById("stList"); if (!list || !ui.live) return;
-  const n = Math.min(S().secciones.length - 1, Math.max(0, i));
-  list.scrollTo({top:n * ui.live.slot, behavior:"smooth"});
+  const n = Math.min(S().secciones.length - 1, Math.max(0, i)), c = liveCards()[n]; if (!c) return;
+  list.scrollTo({top:c.offsetTop - ui.live.pad, behavior:"smooth"});
 }
 function liveStep(d){ if (ui.live) liveGo(ui.live.idx + d); }
 document.addEventListener("click", e => {
@@ -781,6 +868,7 @@ document.addEventListener("click", e => {
   if (b) {
     if (b.dataset.live === "close") closeLive();
     if (b.dataset.live === "edit") { ui.live.edit = !ui.live.edit; haptic(); renderLive(); }
+    if (b.dataset.live === "note") { const song = S(), cur = song.secciones[ui.live.idx]; snap(song); cur.marcas.push({t:"nota", txt:""}); ui.sheet = {type:"mark", sid:cur.id, mi:cur.marcas.length - 1, isNew:true}; haptic(); render(); }
     if (b.dataset.live === "dyn" || b.dataset.live === "mk") {
       const song = S(), cur = song.secciones[ui.live.idx]; snap(song);
       if (b.dataset.live === "dyn") { const v = +b.dataset.v; cur.int = cur.int === v ? 0 : v; fb(cur.int ? "dyn" : "off", cur.int); }
@@ -818,21 +906,30 @@ function addMark(type, withNote){
 /* si una parte no tiene letra, toma la de otra parte del mismo tipo (Coro, Verso…) */
 function letraDe(song, s){
   if (s.letra) return {txt:s.letra, auto:false};
+  if (s.div) return {txt:"", auto:false};
   const key = norm(splitName(s.nombre).tipo);
-  const same = song.secciones.filter(x => x.letra && norm(splitName(x.nombre).tipo) === key);
+  const same = song.secciones.filter(x => x.letra && !x.div && norm(splitName(x.nombre).tipo) === key);
   const i = song.secciones.indexOf(s);
   const prev = same.filter(x => song.secciones.indexOf(x) < i).pop();
   const src = prev || same[0];
   return src ? {txt:src.letra, auto:true} : {txt:"", auto:false};
 }
+function closeSheet(){
+  const sh = ui.sheet, song = S();
+  if (sh && sh.type === "mark" && song) { const s = sec(song, sh.sid), m = s && s.marcas[sh.mi]; if (m && isNote(m) && !String(m.txt || "").trim()) { s.marcas.splice(sh.mi, 1); if (sh.isNew) undo[song.id]?.pop(); touch(song); } }
+  ui.sheet = null; render();
+}
 function newSection(nombre){ return {id:uid(), nombre, letra:"", int:0, marcas:[], nota:""}; }
 /* numeración automática: "Coro", "Coro", "Coro" se muestran como Coro 1, Coro 2, Coro 3 según el orden */
 function splitName(n){ const m = String(n || "").trim().match(/^([A-Za-zÁÉÍÓÚÑáéíóúñü-]+)\s*\d*\s*(.*)$/); return m ? {tipo:m[1], resto:m[2]} : {tipo:String(n || ""), resto:""}; }
 function lbl(song, s){
-  const {tipo, resto} = splitName(s.nombre), key = norm(tipo);
-  const same = song.secciones.filter(x => norm(splitName(x.nombre).tipo) === key);
-  if (same.length < 2) return s.nombre;
-  return `${tipo} ${same.indexOf(s) + 1}${resto ? " " + resto : ""}`;
+  const secs = song.secciones, {tipo, resto} = splitName(s.nombre), key = norm(tipo);
+  let i = secs.indexOf(s), h = i; while (h > 0 && secs[h].div) h--;
+  const head = secs[h] || s;
+  const same = secs.filter(x => !x.div && norm(splitName(x.nombre).tipo) === key);
+  let base = same.length < 2 ? tipo : `${tipo} ${same.indexOf(head) + 1}`;
+  if (s.div || secs[h + 1]?.div) base += (same.length < 2 ? " " : "") + String.fromCharCode(97 + Math.max(0, i - h));
+  return base + (resto ? " " + resto : "");
 }
 const CHORD = /^[\(\[]?[A-G](?:#|b)?(?:m|maj|M|dim|aug|sus|add)?\d*(?:sus\d*|add\d*|b\d+|#\d+|M\d*)*(?:\/[A-G](?:#|b)?)?[\)\]]?$/;
 const isChordLine = l => { const t = l.replace(/[()\[\]]/g, " ").replace(/[–—\-|/x×\d]+(?=\s|$)/g, " ").trim().split(/\s+/).filter(Boolean); return t.length > 0 && t.every(w => CHORD.test(w)); };
@@ -852,7 +949,7 @@ function textSummary(song){
   const head = `${song.titulo.toUpperCase()}${song.tono ? ` (${song.tono})` : ""}${song.bpm ? ` · ${song.bpm} bpm` : ""}${song.compas ? ` · ${song.compas}` : ""}`;
   const lines = song.secciones.map((s, i) => {
     const mk = marksSorted(s).map(markText).join("; ");
-    return `${i + 1}. ${lbl(song, s)} — ${DYN[s.int || 0]}${mk ? ` — ${mk}` : ""}${s.nota ? `\n   Nota: ${s.nota}` : ""}`;
+    return `${i + 1}. ${lbl(song, s)} — ${DYN[s.int || 0]}${mk ? ` — ${mk}` : ""}`;
   });
   return [head, ...lines].join("\n");
 }
@@ -878,7 +975,7 @@ function applyShorthand(text){
     if (!target) return toast("Primero elige una sección");
     const dynI = {mudo:1, "en-silencio":1, cerrado:2, acomp:3, acompanamiento:3, build:4, buildup:4, "build-up":4, abierto:5, pp:1, p:2, mf:3, f:4, ff:5}[lt];
     if (dynI) { target.int = dynI; changes.push(`${lbl(song, target)}: ${DYN[dynI]}`); continue; }
-    if ((m = tok.match(/^nota:"?([^"]*)"?$/i))) { target.nota = (target.nota ? target.nota + "\n" : "") + m[1]; changes.push(`${lbl(song, target)}: nota`); continue; }
+    if ((m = tok.match(/^nota:"?([^"]*)"?$/i))) { (target.marcas ||= []).push({t:"nota", txt:m[1]}); changes.push(`${lbl(song, target)}: nota`); continue; }
     if ((m = tok.match(/^(?:(ini|med|fin)-)?([a-záéíóú>]+)(?:-(ini|med|fin))?(?::"?([^"]*)"?)?$/i))) {
       const key = {sil:"sil", silencio:"sil", fill:"fill", golpe:"golpe", acento:"golpe", ">":"golpe", corte:"corte", stop:"corte", platos:"platos", aro:"platos", plato:"platos"}[norm(m[2])];
       if (key) { (target.marcas ||= []).push({t:key, ...(m[4] ? {txt:m[4]} : {})}); changes.push(`${lbl(song, target)}: ${MARKS[key].lbl}${m[4] ? " (" + m[4] + ")" : ""}`); continue; }
@@ -896,7 +993,7 @@ $app.addEventListener("submit", e => {
 });
 
 document.addEventListener("click", e => {
-  if (ui.live && !e.target.closest(".toast")) return;
+  if (ui.live && !e.target.closest(".toast,.sheet,.scrim")) return;
   const b = e.target.closest("[data-act]"); if (!b) return;
   const a = b.dataset.act, song = S(), sid = b.dataset.sid;
   if (a !== "delSec" && a !== "delSong") ui.confirmDel = null;
@@ -916,17 +1013,28 @@ document.addEventListener("click", e => {
       if (ui.active !== sid) { sfx("nav"); haptic(); } ui.active = sid; render(); scrollToActive(); break;
     case "int": { const s = sec(song, sid), v = +b.dataset.v; snap(song); s.int = s.int === v ? 0 : v; fb(s.int ? "dyn" : "off", s.int); ui.active = sid; touch(song); render(); break; }
     case "mark": ui.active = sid; ui.sheet = {type:"mark", sid, mi:+b.dataset.mi}; render(); break;
-    case "mType": { const s = sec(song, ui.sheet.sid), m = s.marcas[ui.sheet.mi]; snap(song); m.t = b.dataset.v; touch(song); render(); break; }
+    case "mType": { const s = sec(song, ui.sheet.sid), m = s.marcas[ui.sheet.mi]; const ta = document.getElementById("mTxt"); if (ta) m.txt = ta.value.trim(); m.t = (m.t === b.dataset.v && b.dataset.v !== "nota") ? "nota" : b.dataset.v; haptic(); touch(song); render(); break; }
+    case "addNote": { const s0 = sec(song, sid); snap(song); s0.marcas.push({t:"nota", txt:""}); ui.active = sid; ui.sheet = {type:"mark", sid, mi:s0.marcas.length - 1, isNew:true}; haptic(); render(); break; }
+    case "kw": { const ta = document.getElementById("mTxt"); if (!ta) break; const w = b.dataset.v, foc = document.activeElement === ta;
+      const st = foc ? ta.selectionStart : ta.value.length, en = foc ? ta.selectionEnd : ta.value.length;
+      const before = ta.value.slice(0, st), after = ta.value.slice(en), pre = before && !/\s$/.test(before) ? " " : "";
+      ta.value = before + pre + w + " " + after.replace(/^\s+/, ""); const pos = (before + pre + w + " ").length;
+      if (foc) try { ta.setSelectionRange(pos, pos); } catch(err) {}
+      ta.dispatchEvent(new Event("input", {bubbles:true})); sfx("nav"); haptic(); break; }
+    case "split": { const i = song.secciones.findIndex(x => x.id === sid), s0 = song.secciones[i]; snap(song);
+      const ns = {...newSection(s0.nombre), int:s0.int || 0, div:true}; song.secciones.splice(i + 1, 0, ns); ui.active = ns.id; fb("add"); touch(song); render(); scrollToActive();
+      toast(`Dividida en ${lbl(song, s0)} y ${lbl(song, ns)}`, true); break; }
     case "mDel": { fb("del"); const s = sec(song, ui.sheet.sid); snap(song); s.marcas.splice(ui.sheet.mi, 1); ui.sheet = null; touch(song); render(); toast("Golpe quitado", true); break; }
-    case "closeSheet": ui.sheet = null; render(); break;
+    case "closeSheet": closeSheet(); break;
+    case "noop": break;
     case "undo": { const st = undo[song?.id]; if (!st?.length) break; fb("undo"); song.secciones = JSON.parse(st.pop()); ui.sheet = null; touch(song); render(); document.querySelector(".toast")?.remove(); break; }
     case "dup": { fb("add"); const i = song.secciones.findIndex(s => s.id === sid); snap(song); const c = JSON.parse(JSON.stringify(song.secciones[i])); c.id = uid(); song.secciones.splice(i + 1, 0, c); ui.active = c.id; touch(song); render(); scrollToActive(); toast(`${lbl(song, c)} agregada`, true); break; }
     case "up": case "down": { const i = song.secciones.findIndex(s => s.id === sid), j = a === "up" ? i - 1 : i + 1; if (j < 0 || j >= song.secciones.length) break; snap(song); [song.secciones[i], song.secciones[j]] = [song.secciones[j], song.secciones[i]]; touch(song); render(); scrollToActive(); break; }
     case "delSec": if (ui.confirmDel !== sid) { haptic(); ui.confirmDel = sid; render(); toast("Toca otra vez para borrar la parte"); break; }
-      { fb("del"); const i = song.secciones.findIndex(s => s.id === sid); snap(song); song.secciones.splice(i, 1); ui.confirmDel = null; ui.active = song.secciones[Math.min(i, song.secciones.length - 1)]?.id; touch(song); render(); toast("Parte borrada", true); } break;
+      { fb("del"); const i = song.secciones.findIndex(s => s.id === sid); snap(song); if (!song.secciones[i].div && song.secciones[i + 1]?.div) song.secciones[i + 1].div = false; song.secciones.splice(i, 1); ui.confirmDel = null; ui.active = song.secciones[Math.min(i, song.secciones.length - 1)]?.id; touch(song); render(); toast("Parte borrada", true); } break;
     case "quickName": document.getElementById("secName").value = b.dataset.v; break;
     case "saveSec": { fb("ok"); const s = sec(song, ui.sheet.sid); snap(song); { const v = document.getElementById("secName").value.trim(); if (v) { const sp = splitName(v); s.nombre = sp.resto ? `${sp.tipo} ${sp.resto}` : sp.tipo; } } s.letra = document.getElementById("secLy").value.trim(); ui.sheet = null; touch(song); render(); break; }
-    case "addAfter": case "addSec": { fb("add"); snap(song); const ns = newSection(a === "addAfter" ? splitName(sec(song, sid).nombre).tipo : "Coro"); const i = a === "addAfter" ? song.secciones.findIndex(s => s.id === sid) + 1 : song.secciones.length; song.secciones.splice(i, 0, ns); ui.active = ns.id; ui.sheet = {type:"sec", sid:ns.id}; touch(song); render(); break; }
+    case "addAfter": case "addSec": { fb("add"); snap(song); const ns = newSection(a === "addAfter" ? splitName(sec(song, sid).nombre).tipo : "Coro"); let i = a === "addAfter" ? song.secciones.findIndex(s => s.id === sid) + 1 : song.secciones.length; while (a === "addAfter" && song.secciones[i]?.div) i++; song.secciones.splice(i, 0, ns); ui.active = ns.id; ui.sheet = {type:"sec", sid:ns.id}; touch(song); render(); break; }
     case "more": ui.sheet = {type:"more"}; render(); break;
     case "appMenu": ui.sheet = {type:"app"}; render(); break;
     case "togSound": prefs.sound = !prefs.sound; savePrefs(); if (prefs.sound) sfx("ok"); render(); break;
@@ -1048,6 +1156,7 @@ document.addEventListener("touchend", () => { if (drag) endDrag(); }, {passive:t
 document.addEventListener("contextmenu", e => { if (e.target.closest(".sec-h")) e.preventDefault(); });
 
 document.addEventListener("contextmenu", e => { if (e.target.closest("[data-pad]")) e.preventDefault(); });
+document.addEventListener("mousedown", e => { if (e.target.closest('[data-act="kw"]')) e.preventDefault(); });
 
 /* dictado (si el navegador lo permite) */
 let dict = null, dictOn = null;
@@ -1091,7 +1200,7 @@ function importBackup(){
       const list = (Array.isArray(o) ? o : o.canciones || []).filter(x => x && x.titulo && Array.isArray(x.secciones));
       if (!list.length) { toast("Ese archivo no tiene canciones"); return; }
       let nuevas = 0;
-      list.forEach(x => { const id = x.id || uid(); if (!songs[id]) nuevas++; songs[id] = {...JSON.parse(JSON.stringify(x)), id}; touch(songs[id]); });
+      list.forEach(x => { const id = x.id || uid(); if (!songs[id]) nuevas++; songs[id] = normSong({...JSON.parse(JSON.stringify(x)), id}); touch(songs[id]); });
       ui.sheet = null; ui.screen = "home"; render(); fb("ok");
       toast(`Importadas ${list.length} canciones (${nuevas} nuevas)`);
     } catch(e) { toast("No pude leer el archivo de respaldo"); }
